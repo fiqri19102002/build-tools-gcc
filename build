@@ -269,8 +269,8 @@ function parse_parameters() {
             "gnu:6") GCC=gcc-6-branch ;;
             "gnu:7") GCC=gcc-7-branch ;;
             "gnu:8") GCC=gcc-8-branch ;;
-            "gnu:9") GCC=gcc-9-branch ;;
-            "gnu:10") GCC=gcc-10-branch ;;
+            "gnu:9") GCC=releases/gcc-9 ;;
+            "gnu:10") GCC=releases/gcc-10 ;;
             "gnu:11") GCC=master ;;
             "linaro:4") GCC=linaro-local/releases/linaro-4.9-2017.01
                         GLIBC_git="release/2.27/master"
@@ -300,7 +300,7 @@ function parse_parameters() {
             "gnu:6") GCC=gcc-6.5.0 ;;
             "gnu:7") GCC=gcc-7.4.0 ;;
             "gnu:8") GCC=gcc-8.3.0 ;;
-            "gnu:9") GCC=gcc-9.2.0 ;;
+            "gnu:9") GCC=gcc-9.3.0 ;;
             "gnu:10") GCC=gcc-10.2.0 ;;
             "gnu:11") die "GCC 11.0 is currently a WIP so there is no tarball to download! Either use the git repo or choose a new version..." ;;
             "linaro:4") GCC=linaro-4.9-2017.01
