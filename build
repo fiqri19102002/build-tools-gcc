@@ -811,7 +811,7 @@ function push_sources()
         cd upstream || exit
         rm -rf *
         cp -r ../${TARGET}/* .
-        git checkout README.md && git add .
+        git add .
         if [ "${TARBALLS}" == true ]; then
         git commit -am "Update to https://github.com/gcc-mirror/gcc/commit/${GCC_HEAD_COMMIT}, ${DATE} build.
 
@@ -829,7 +829,7 @@ BUILDER COMMIT: ${BUILDER_COMMIT}" && git push && COMMIT_MSG=$(git log -1 --pret
         cd upstream || exit
         rm -rf *
         cp -r ../${TARGET}/* .
-        git checkout README.md && git add .
+        git add .
         if [ "${TARBALLS}" == true ]; then
         git commit -am "Update to https://github.com/gcc-mirror/gcc/commit/${GCC_HEAD_COMMIT}, ${DATE} build.
 
