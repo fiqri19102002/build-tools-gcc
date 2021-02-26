@@ -204,7 +204,7 @@ function setup_variables() {
     LINUX="5.10"
 
     # Timezone
-    export TZ=Asia/Kolkata
+    export TZ=Asia/Jakarta
 
     # Start of script
     START=$(date +%s)
