@@ -786,6 +786,12 @@ function ending_info() {
     echo "\a"
 }
 
+function git_setup()
+{
+    git config --global user.email "fiqri15072019@gmail.com"
+    git config --global user.name "Fiqri Ardyansyah"
+}
+
 function push_tg_info()
 {
     HEAD_COMMIT=$(git log -n 1 --pretty=format:%H)
@@ -881,5 +887,6 @@ build_glibc
 install_gcc
 package_tc
 ending_info
+git_setup
 push_sources
 push_logs
