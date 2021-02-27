@@ -789,7 +789,7 @@ function ending_info() {
 function push_tg_info()
 {
     HEAD_COMMIT=$(git log -n 1 --pretty=format:%H)
-    GIT_URL="https://github.com/theradcolor/${TARGET}/commit/${HEAD_COMMIT}"
+    GIT_URL="https://github.com/fiqri19102002/${TARGET}/commit/${HEAD_COMMIT}"
 
     if [ "${TARBALLS}" == true ]; then
        curl -s -X POST https://api.telegram.org/bot${TG_BOT_API}/sendMessage?chat_id=${CHANNEL_ID} \
@@ -807,7 +807,7 @@ function push_sources()
     DATE="$(date +%d%m%Y)"
     BUILDER_COMMIT="$(git rev-parse HEAD)"
     if [ ${TARGET} == "arm-linux-gnueabi" ]; then
-        git clone "https://theradcolor:${GITHUB_TOKEN}@github.com/theradcolor/arm-linux-gnueabi" upstream
+        git clone "https://fiqri19102002:${GITHUB_TOKEN}@github.com/fiqri19102002/arm-gcc" upstream
         cd upstream || exit
         rm -rf *
         cp -r ../${TARGET}/* .
@@ -825,25 +825,7 @@ GCC COMMIT URL: https://github.com/gcc-mirror/gcc/commit/${GCC_HEAD_COMMIT}
 BUILDER COMMIT: ${BUILDER_COMMIT}" && git push && COMMIT_MSG=$(git log -1 --pretty=%B) && push_tg_info
         fi
     elif [ ${TARGET} == "aarch64-linux-gnu" ]; then
-        git clone "https://theradcolor:${GITHUB_TOKEN}@github.com/theradcolor/aarch64-linux-gnu" upstream
-        cd upstream || exit
-        rm -rf *
-        cp -r ../${TARGET}/* .
-        git checkout README.md && git add .
-        if [ "${TARBALLS}" == true ]; then
-        git commit -am "Update to https://github.com/gcc-mirror/gcc/commit/${GCC_HEAD_COMMIT}, ${DATE} build.
-
-GCC VERSION: $(/drone/src/builder/${TARGET}/bin/${TARGET}-gcc --version | head -n 1)
-BUILDER COMMIT: ${BUILDER_COMMIT}" && git push && COMMIT_MSG=$(git log -1 --pretty=%B) && push_tg_info
-        else
-        git commit -am "Update to https://github.com/gcc-mirror/gcc/commit/${GCC_HEAD_COMMIT}, ${DATE} build.
-
-GCC VERSION: $(/drone/src/builder/${TARGET}/bin/${TARGET}-gcc --version | head -n 1)
-GCC COMMIT URL: https://github.com/gcc-mirror/gcc/commit/${GCC_HEAD_COMMIT}
-BUILDER COMMIT: ${BUILDER_COMMIT}" && git push && COMMIT_MSG=$(git log -1 --pretty=%B) && push_tg_info
-        fi
-    elif [ ${TARGET} == "x86_64-linux-gnu" ]; then
-        git clone "https://theradcolor:${GITHUB_TOKEN}@github.com/theradcolor/x86_64-linux-gnu" upstream
+        git clone "https://fiqri19102002:${GITHUB_TOKEN}@github.com/fiqri19102002/aarch64-gcc" upstream
         cd upstream || exit
         rm -rf *
         cp -r ../${TARGET}/* .
@@ -871,8 +853,6 @@ function push_logs()
         LOG="/drone/src/build-arm-gnu-gcc.log"
     elif [ ${TARGET} == "aarch64-linux-gnu" ]; then
         LOG="/drone/src/build-arm64-gnu-gcc.log"
-    elif [ ${TARGET} == "x86_64-linux-gnu" ]; then
-        LOG="/drone/src/build-x86_64-gnu-gcc.log"
     else
         echo "No scripting"
     fi
