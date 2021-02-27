@@ -813,8 +813,11 @@ function push_sources()
     DATE="$(date +%d%m%Y)"
     BUILDER_COMMIT="$(git rev-parse HEAD)"
     if [ ${TARGET} == "arm-linux-gnueabi" ]; then
-        git clone "https://fiqri19102002:${GITHUB_TOKEN}@github.com/fiqri19102002/arm-gcc" upstream
+        mkdir -p upstream
         cd upstream || exit
+        git init
+        git remote add origin https://fiqri19102002:${GITHUB_TOKEN}@github.com/fiqri19102002/arm-gcc.git
+        git checkout -b gnu-gcc-10
         rm -rf *
         cp -r ../${TARGET}/* .
         git add .
@@ -822,31 +825,33 @@ function push_sources()
         git commit -am "Update to https://github.com/gcc-mirror/gcc/commit/${GCC_HEAD_COMMIT}, ${DATE} build.
 
 GCC VERSION: $(/drone/src/builder/${TARGET}/bin/${TARGET}-gcc --version | head -n 1)
-BUILDER COMMIT: ${BUILDER_COMMIT}" && git push && COMMIT_MSG=$(git log -1 --pretty=%B) && push_tg_info
+BUILDER COMMIT: ${BUILDER_COMMIT}" && git push -u origin gnu-gcc-10 && COMMIT_MSG=$(git log -1 --pretty=%B) && push_tg_info
         else
         git commit -am "Update to https://github.com/gcc-mirror/gcc/commit/${GCC_HEAD_COMMIT}, ${DATE} build.
 
 GCC VERSION: $(/drone/src/builder/${TARGET}/bin/${TARGET}-gcc --version | head -n 1)
 GCC COMMIT URL: https://github.com/gcc-mirror/gcc/commit/${GCC_HEAD_COMMIT}
-BUILDER COMMIT: ${BUILDER_COMMIT}" && git push && COMMIT_MSG=$(git log -1 --pretty=%B) && push_tg_info
+BUILDER COMMIT: ${BUILDER_COMMIT}" && git push -u origin gnu-gcc-10 && COMMIT_MSG=$(git log -1 --pretty=%B) && push_tg_info
         fi
     elif [ ${TARGET} == "aarch64-linux-gnu" ]; then
-        git clone "https://fiqri19102002:${GITHUB_TOKEN}@github.com/fiqri19102002/aarch64-gcc" upstream
+        mkdir -p upstream
         cd upstream || exit
-        rm -rf *
+        git init
+        git remote add origin https://fiqri19102002:${GITHUB_TOKEN}@github.com/fiqri19102002/aarch64-gcc.git
+        git checkout -b gnu-gcc-10
         cp -r ../${TARGET}/* .
         git add .
         if [ "${TARBALLS}" == true ]; then
         git commit -am "Update to https://github.com/gcc-mirror/gcc/commit/${GCC_HEAD_COMMIT}, ${DATE} build.
 
 GCC VERSION: $(/drone/src/builder/${TARGET}/bin/${TARGET}-gcc --version | head -n 1)
-BUILDER COMMIT: ${BUILDER_COMMIT}" && git push && COMMIT_MSG=$(git log -1 --pretty=%B) && push_tg_info
+BUILDER COMMIT: ${BUILDER_COMMIT}" && git push -u origin gnu-gcc-10 && COMMIT_MSG=$(git log -1 --pretty=%B) && push_tg_info
         else
         git commit -am "Update to https://github.com/gcc-mirror/gcc/commit/${GCC_HEAD_COMMIT}, ${DATE} build.
 
 GCC VERSION: $(/drone/src/builder/${TARGET}/bin/${TARGET}-gcc --version | head -n 1)
 GCC COMMIT URL: https://github.com/gcc-mirror/gcc/commit/${GCC_HEAD_COMMIT}
-BUILDER COMMIT: ${BUILDER_COMMIT}" && git push && COMMIT_MSG=$(git log -1 --pretty=%B) && push_tg_info
+BUILDER COMMIT: ${BUILDER_COMMIT}" && git push -u origin gnu-gcc-10 && COMMIT_MSG=$(git log -1 --pretty=%B) && push_tg_info
         fi
     else
         echo "Skipping push!"
