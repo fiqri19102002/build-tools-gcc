@@ -813,7 +813,7 @@ function push_sources()
     DATE="$(date +%d%m%Y)"
     BUILDER_COMMIT="$(git rev-parse HEAD)"
     if [ ${TARGET} == "arm-linux-gnueabi" ]; then
-        git clone "https://fiqri19102002:${GITHUB_TOKEN}@github.com/fiqri19102002/arm-gcc" upstream
+        git clone "https://fiqri19102002:${GITHUB_TOKEN}@github.com/fiqri19102002/arm-gcc" -b gnu-gcc-10 upstream
         cd upstream || exit
         rm -rf *
         cp -r ../${TARGET}/* .
@@ -831,7 +831,7 @@ GCC COMMIT URL: https://github.com/gcc-mirror/gcc/commit/${GCC_HEAD_COMMIT}
 BUILDER COMMIT: ${BUILDER_COMMIT}" && git push && COMMIT_MSG=$(git log -1 --pretty=%B) && push_tg_info
         fi
     elif [ ${TARGET} == "aarch64-linux-gnu" ]; then
-        git clone "https://fiqri19102002:${GITHUB_TOKEN}@github.com/fiqri19102002/aarch64-gcc" upstream
+        git clone "https://fiqri19102002:${GITHUB_TOKEN}@github.com/fiqri19102002/aarch64-gcc" -b gnu-gcc-10 upstream
         cd upstream || exit
         rm -rf *
         cp -r ../${TARGET}/* .
