@@ -20,7 +20,7 @@ steps:
     - "export GITHUB_TOKEN"
     - apt-get update -y && apt-get upgrade -y && DEBIAN_FRONTEND=noninteractive apt-get install aria2 rsync lzip flex bison sudo git ncurses-dev texinfo gcc gperf patch libtool automake g++ libncurses5-dev gawk subversion expat libexpat1-dev python-all-dev python python3 binutils-dev libgcc1 bc libisl-dev libcap-dev autoconf autoconf-archive libgmp-dev build-essential gcc-multilib g++-multilib pkg-config libmpc-dev libmpfr-dev autopoint gettext liblzma-dev libssl-dev libz-dev -y
     - git clone https://github.com/fiqri19102002/build-tools-gcc.git builder && cd builder
-    - script -c "bash -x build -a arm -s gnu -v 10 -V -p zstd -tm" /drone/src/build-arm-gnu-gcc.log
+    - script -c "bash -x build -a arm -s gnu -v 10 -V -p zstd -tr -tm" /drone/src/build-arm-gnu-gcc.log
 
 ---
 kind: pipeline
@@ -45,4 +45,4 @@ steps:
     - "export GITHUB_TOKEN"
     - apt-get update -y && apt-get upgrade -y && DEBIAN_FRONTEND=noninteractive apt-get install aria2 rsync lzip flex bison sudo git ncurses-dev texinfo gcc gperf patch libtool automake g++ libncurses5-dev gawk subversion expat libexpat1-dev python-all-dev python python3 binutils-dev libgcc1 bc libisl-dev libcap-dev autoconf autoconf-archive libgmp-dev build-essential gcc-multilib g++-multilib pkg-config libmpc-dev libmpfr-dev autopoint gettext liblzma-dev libssl-dev libz-dev -y
     - git clone https://github.com/fiqri19102002/build-tools-gcc.git builder && cd builder
-    - script -c "bash -x build -a arm64 -s gnu -v 10 -V -p zstd -tm" /drone/src/build-arm64-gnu-gcc.log
+    - script -c "bash -x build -a arm64 -s gnu -v 10 -V -p zstd -tr -tm" /drone/src/build-arm64-gnu-gcc.log
