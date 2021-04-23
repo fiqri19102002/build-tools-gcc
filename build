@@ -792,22 +792,6 @@ function git_setup()
     git config --global user.name "Fiqri Ardyansyah"
 }
 
-function push_tg_info()
-{
-    HEAD_COMMIT=$(git log -n 1 --pretty=format:%H)
-    GIT_URL="https://github.com/fiqri19102002/${TARGET}/commit/${HEAD_COMMIT}"
-
-    if [ "${TARBALLS}" == true ]; then
-       curl -s -X POST https://api.telegram.org/bot${TG_BOT_API}/sendMessage?chat_id=${CHANNEL_ID} \
-       -d "disable_web_page_preview=true" \
-       -d "parse_mode=markdown&text=⚒️ New commit to ${TARGET}:stable"$'\n\n'"[$(echo ${HEAD_COMMIT} | cut -c1-8)](${GIT_URL}): ${COMMIT_MSG}"
-    else
-       curl -s -X POST https://api.telegram.org/bot${TG_BOT_API}/sendMessage?chat_id=${CHANNEL_ID} \
-       -d "disable_web_page_preview=true" \
-       -d "parse_mode=markdown&text=⚒️ New commit to ${TARGET}:master"$'\n\n'"[$(echo ${HEAD_COMMIT} | cut -c1-8)](${GIT_URL}): ${COMMIT_MSG}"
-    fi
-}
-
 function push_sources()
 {
     DATE="$(date +%d%m%Y)"
@@ -825,7 +809,7 @@ function push_sources()
 
 GCC VERSION: $(/drone/src/builder/${TARGET}/bin/${TARGET}-gcc --version | head -n 1)
 GCC COMMIT URL: https://github.com/gcc-mirror/gcc/commit/${GCC_HEAD_COMMIT}
-BUILDER COMMIT: ${BUILDER_COMMIT}" && git push && COMMIT_MSG=$(git log -1 --pretty=%B) && push_tg_info
+BUILDER COMMIT: ${BUILDER_COMMIT}" && git push && COMMIT_MSG=$(git log -1 --pretty=%B)
         fi
     elif [ ${TARGET} == "aarch64-linux-gnu" ]; then
         git clone "https://fiqri19102002:${GITHUB_TOKEN}@github.com/fiqri19102002/aarch64-gcc" -b gnu-gcc-10 upstream
@@ -840,7 +824,7 @@ BUILDER COMMIT: ${BUILDER_COMMIT}" && git push && COMMIT_MSG=$(git log -1 --pret
 
 GCC VERSION: $(/drone/src/builder/${TARGET}/bin/${TARGET}-gcc --version | head -n 1)
 GCC COMMIT URL: https://github.com/gcc-mirror/gcc/commit/${GCC_HEAD_COMMIT}
-BUILDER COMMIT: ${BUILDER_COMMIT}" && git push && COMMIT_MSG=$(git log -1 --pretty=%B) && push_tg_info
+BUILDER COMMIT: ${BUILDER_COMMIT}" && git push && COMMIT_MSG=$(git log -1 --pretty=%B)
         fi
     else
         echo "Skipping push!"
